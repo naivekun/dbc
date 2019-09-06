@@ -214,7 +214,7 @@ app.post('/register', function (req, res) {
     var password = password1;
     pool.getConnection(function (err, connection) {
         connection.query(db.queryUsername, [username], function (err, result) {
-            connection.release();
+            
             if (result.length > 0) {
                 res.render('register', {
                     isLogin: false,
@@ -236,7 +236,9 @@ app.post('/register', function (req, res) {
                     });
                 });
             }
+            
         });
+        connection.release();
     });
 });
 
