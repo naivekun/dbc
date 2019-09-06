@@ -1,11 +1,12 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="./static/css/amazeui.min.css"/>
-        <style>
 
-        .banner2{
-            background: rgb(0, 0, 0);
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/css/amazeui.min.css" />
+    <style>
+        .banner2 {
+            background: #10a0ea;
+            /* background: #000; */
             color: #fff;
             text-align: center;
             padding: 200px 0;
@@ -17,39 +18,51 @@
             padding: 20px;
             display: inline-block;
         }
+
         .join-btn {
             background: #fff;
             color: rgb(0, 0, 0);
         }
+    </style>
 
-        </style>
+    <title>Unique Lab</title>
+</head>
 
-        <title>L3H CTF</title>
-    </head>
+<body>
+    <% include header.html %>
 
-    <body>
-        <% include header.html %>
-        
-        <div style="min-height: 93%">
-        <div class="banner2">
-            <div class="am-g">
-                <div class="am-u-lg-12">
-                    <h2 class="banner2-title">L3H Sec 2019 秋季招新</h1>
-                    <p>
-                        <a class="am-btn am-btn-sm join-btn" href="/challenge">加入我们</a>
-                    </p>
-                    <br>
-                    <br>
-                    <br>
-                </div>
-            </div>
+    <div class="banner2">
+        <div class="am-g">
+            <div class="am-u-lg-3  am-u-sm-centered">
+            <h2 class=banner2-title>Unique Lab Recruit</h2>
+            <form method="post" class="am-form" action="./start">
+                <label for="username">姓名</label>
+                <input type="text" name="name" id="name" value="">
+                <br>
+                <label for="stuNo">学号</label>
+                <input type="text" name="stuNo" id="stuNo" value="">
+                <br>
+
+                <label for="captcha">验证码</label>
+                <input type="text" name="captcha" id="captcha" value="">
+                <br>
+                <img src="/captcha" onclick={$(event.target).attr('src','/captcha?'+Math.random())}>
+                <br>
+                <% if(msg){ %>
+                    <h4><%= msg %></h4>
+                <% } else { %>
+                <br>
+                <% } %>
+                <input type="submit" name="" value="加入我们" class="am-btn am-btn-success am-u-lg-centered am-btn-sm am-fl">
+            </form>
         </div>
         </div>
-<% include footer.html %>
-        
+    </div>
+    <% include footer.html %>
 
-        <script src="./static/js/jquery.min.js"></script>
-        <script src="./static/js/amazeui.min.js"></script>
-    </body>
+
+    <script src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/amazeui.min.js"></script>
+</body>
 
 </html>

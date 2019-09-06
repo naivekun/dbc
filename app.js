@@ -30,18 +30,11 @@ var pool = mysql.createPool(db.mysql);
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
-    var isLogin = checkLogin(req, res);
-    if (isLogin) {
-        var loginUsername = req.session.username;
-    }
+    
 
     res.render('index', {
-        isLogin: isLogin,
-        loginUsername: loginUsername,
-        isIndexPage: true,
-        isChallengePage: false,
-        isRankPage: false,
-        isFlagPage: false
+        isLogin: false,
+        msg: req.session.msg
     });
 });
 
@@ -51,38 +44,56 @@ app.get('/admin',function(req,res){
 });
 
 app.get('/captcha',function(req,res){
-    var cap = captcha.createMathExpr({mathMin:2,mathMax:80});
+    var cap = captcha.createMathExpr({mathMin:2,mathMax:80,background:'#ffffff'});
     req.session.captcha = cap.text;
     res.type('svg');
     res.send(cap.data);
 });
 
-function verifyCaptcha(req,res,page){
-    if(!req.session.captcha){
-        res.render(page,{
-            isLogin: false,
-            isIndexPage: false,
-            isChallengePage: false,
-            isFlagPage: false,
-            isRankPage: false,
-            Message: "session中找不到验证码，请刷新页面"
-        });
-        return false;
+app.get('/start',function(req,res){
+    res.redirect(302,'/')
+});
+
+app.post('/start',function(req,res){
+    
+    if(!req.body.name || !req.body.stuNo || !req.body.captcha)
+    {
+        req.session.msg="请填写所有表单";
+        res.redirect(302,'/');
+        return;
     }
+    if(!req.session.captcha)
+    {
+        req.session.msg="Session中找不到验证码，请重试"
+    }
+    if(!verifyCaptcha(req,res))
+    {
+        req.session.msg="验证码错误";
+        res.redirect(302,'/');
+        return;
+    }
+
+    pool.getConnection(function(connErr,connection){
+        connection.query(db.queryAllQuestion,function(queryErr,result){
+
+        });
+        connection.release();
+    });
+
+    res.render('start',{
+        posts: [{title:"a",describe:"b"},{title:"aaaa",describe:'aaaa'}],
+        isLogin: true,
+        loginUsername: 'test'
+    });
+});
+
+function verifyCaptcha(req,res){
     if(req.body.captcha) {
         if(req.body.captcha == req.session.captcha){
             delete req.session.captcha;
             return true;
         }
     }
-    res.render(page,{
-        isLogin: false,
-        isIndexPage: false,
-        isChallengePage: false,
-        isFlagPage: false,
-        isRankPage: false,
-        Message: "验证码错误"
-    });
     return false;
 }
 

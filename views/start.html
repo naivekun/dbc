@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/css/amazeui.min.css" />
+    <style>
+
+
+
+    </style>
+
+    <title>L3H CTF</title>
+</head>
+
+<body>
+    <% include header.html %>
+
+    <br>
+    <div class="am-g am-g-fixed blog-g-fixed" style="min-height: 93%">
+        <div class="am-u-md-8">
+            <form method="post"  class="am-form">
+            <% var ansIndex=0; posts.forEach(function(post) { ansIndex = ansIndex + 1 %>
+                <article class="blog-main">
+                    <h3 class="am-article-title blog-title">
+                        <p><%= post.title %></p>
+                    </h3>
+
+                    <div class="am-g blog-content">
+                        <div class="am-u-lg-7">
+                            <p>
+                                <%= post.content %>
+                            </p>
+                            
+                                <input type="text" name="ans<%= ansIndex %>" id="ans<%= ansIndex %>" value="">
+                        </div>
+                    </div>
+                    
+                </article>
+            <hr>
+
+            <% }); %>
+            <button type="button" class="am-btn am-btn-success">提交</button>
+            </form>
+        </div>
+    </div>
+<% include footer.html %>
+
+    <script src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/amazeui.min.js"></script>
+</body>
+
+</html>

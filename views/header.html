@@ -1,36 +1,19 @@
 <header class="am-topbar am-topbar-fixed-top am-topbar-inverse">
     <div class="am-container">
         <h1 class="am-topbar-brand">
-            <a href=".">L3H CTF</a>
+            <a href=".">Unique Lab</a>
         </h1>
 
-    <div class="am-collapse am-topbar-collapse" id="topbar">
-        <ul class="am-nav am-nav-pills am-topbar-nav">
-            <% if (isIndexPage) { %> <li class="am-active"><% } else { %><li><% } %><a href=".">首页</a></li>
-            <% if (isChallengePage) { %> <li class="am-active"><% } else { %><li><% } %><a href="./challenge">题目</a></li>
-            <% if (isFlagPage) { %> <li class="am-active"><% } else { %><li><% } %><a href="./flag">提交flag</a></li>
-            <% if (isRankPage) { %> <li class="am-active"><% } else { %><li><% } %><a href="./rank">排名</a></li>
-        </ul>
-        <% if (isLogin) { %>
-        <div class="am-topbar-right">
-            <ul class="am-nav am-nav-pills am-topbar-nav">
-                <li><a href="./profile"><%= loginUsername %></a></li>
-                <li><a href="./logout">退出</a></li>
-            </ul>
-        </div>
+        <div class="am-collapse am-topbar-collapse" id="topbar">
+            <% if (isLogin) { %>
+            <div class="am-topbar-right">
+                <ul class="am-nav am-nav-pills am-topbar-nav">
+                    <li><a href="./profile"><%= loginUsername %></a></li>
+                    <li><a href="./logout">退出</a></li>
+                </ul>
+            </div>
 
-        <% }else{ %>
-        <div class="am-topbar-right" id="btn-login">
-            <button class="am-btn am-btn-success am-topbar-btn am-btn-sm" onclick="window.location.href='./login'">
-                <a href="./login">登录</a>
-            </button>
-        </div>
+            <% } %>
 
-        <div class="am-topbar-right" id="btn-reg">
-            <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm" onclick="window.location.href='./register'">
-                <a href="./register">注册</a>
-            </button>
         </div>
-        <% } %>
-    </div>
 </header>
