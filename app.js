@@ -162,7 +162,7 @@ app.get('/complete',function(req,res){
 });
 
 function verifyCaptcha(req, res) {
-    return true;
+    // return true; //debug
     if (req.body.captcha) {
         if (req.body.captcha == req.session.captcha) {
             delete req.session.captcha;
