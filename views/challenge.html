@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/css/amazeui.min.css" />
+    <style>
+
+
+
+    </style>
+
+    <title>L3H CTF</title>
+</head>
+
+<body>
+    <% include header.html %>
+
+    <br>
+    <div class="am-g am-g-fixed blog-g-fixed" style="min-height: 93%">
+        <div class="am-u-md-8">
+            <% posts.forEach(function(post) { %>
+
+            <article class="blog-main">
+                <h3 class="am-article-title blog-title">
+                    <p><%= post.title %></p>
+                </h3>
+                <h4 class="am-article-meta blog-meta">by <%= post.author %></h4>
+
+                <div class="am-g blog-content">
+                    <div class="am-u-lg-7">
+                        <p>
+                            <%= post.describe %>
+                        </p>
+                        <p> <% if(post.url.length > 0) { %>
+                            <a href="<%= post.url %>">链接</a>
+                        </p><% } %>
+                    </div>
+                </div>
+                
+            </article>
+            <hr>
+
+            <% }); %>
+        </div>
+    </div>
+<% include footer.html %>
+
+    <script src="./static/js/jquery.min.js"></script>
+    <script src="./static/js/amazeui.min.js"></script>
+</body>
+
+</html>
