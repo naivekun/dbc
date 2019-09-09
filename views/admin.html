@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./static/css/amazeui.min.css" />
+
+    <title>L3H CTF</title>
+</head>
+
+<body>
+    <% include header.html %>
+    <br>
+    <br>
+    <div class="am-g am-u-lg-4 am-u-lg-centered" style="min-height: 93%">
+        <table class="am-table am-table-bordered">
+            <thead>
+                <tr>
+                    <td>姓名</td>
+                    <td>学号</td>
+                    <td>问卷结果</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% records.forEach(function(record){ %>
+                    <tr <% if(record.isSelf) { %> class="am-active" <% } %> >
+                        <td><%= record.name %></td>
+                        <td><%= record.stuNo %></td>
+                        <td><a href="./admin/result?id=<%= record.id %>">点击查看</a> </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+        
+    </div>
+<% include footer.html %>
+</body>
+
+
+<script src="./static/js/jquery.min.js"></script>
+<script src="./static/js/amazeui.min.js"></script>
+</html>

@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/amazeui.min.css" />
+    <style>
+
+
+
+    </style>
+
+    <title>Unique Lab</title>
+</head>
+
+<body>
+    <% include header.html %>
+
+    <br>
+    <div class="am-g am-g-fixed blog-g-fixed" style="min-height: 93%">
+        <div class="am-u-md-8">
+            <form method="post" class="am-form">
+                <% var ansIndex=0; results.forEach(function(result) { ansIndex = ansIndex + 1;result=result[0] %>
+                <article class="blog-main">
+                    <h3 class="am-article-title blog-title">
+                        <p><%= result["title"] %></p>
+                    </h3>
+
+                    <div class="am-g blog-content">
+                        <div class="am-u-lg-7">
+                            <p>
+                                <%= result["content"] %>
+                            </p>
+
+                            <% if(result["ansType"] == 1){ var choiceIndex = 0; %>
+                            
+                                <% result["choice"].split("|||").forEach(function(choice){ choiceIndex = choiceIndex + 1; %>
+                                <div class="am-radio">
+                                <label>
+                                    <input type="radio" name="radio_<%= ansIndex %>" value="<%= choiceIndex %>" <% if(choiceIndex == result["ans"]){ %>checked="checked" <% } %> /><%= choice %>
+                                </label>
+                                </div>
+                                <% }); %>
+                            
+                            <% } else if(result["ansType"] == 2) { var choiceIndex = 0; %>
+
+                                <% result["choice"].split("|||").forEach(function(choice){ choiceIndex = choiceIndex + 1; %>
+                                <div class="am-checkbox">
+                                <label>
+                                    <input type="checkbox" name="checkbox_<%= ansIndex %>[]" value="<%= choiceIndex %>" <% if(result["ans"].includes(choiceIndex.toString())){ %>checked="checked" <% } %> /><%= choice %>
+                                </label>
+                                </div>
+                                <% }); %>
+                            <% } else if(result["ansType"] == 3) { %>
+                                <input type="text" name="textans_<%= ansIndex %>" id="ans<%= ansIndex %>" value="<%= result.ans %>">
+                            <% } %>
+                        </div>
+                    </div>
+
+                </article>
+                <hr>
+
+                <% }); %>
+                <button type="submit" class="am-btn am-btn-success">提交</button>
+            </form>
+        </div>
+    </div>
+    <% include footer.html %>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/amazeui.min.js"></script>
+</body>
+
+</html>

@@ -66,7 +66,6 @@ app.post('/', function (req, res) {
     }
 
     pool.getConnection(function (connErr, connection) {
-        console.log(connErr);
         connection.query(db.queryIfUserExist, [req.body.name, req.body.stuNo], function (err1, result1) {
             if (result1.length > 0 && result1[0]['ansJson']) {
                 req.session.msg = "你已经填过了";
@@ -75,7 +74,6 @@ app.post('/', function (req, res) {
             }
 
             connection.query(db.insertUserBaseInfo, [req.body.name, req.body.stuNo], function (err2, result2) {
-                console.log(err2);
                 if(!err2)
                 {
                     req.session.baseInfoOk=1;
@@ -93,9 +91,77 @@ app.post('/', function (req, res) {
 });
 
 app.get('/admin', function (req, res) {
-    res.send("别看了，没后台<br><del>我懒得写</del>");
     //todo: add a backend with OTP
+    if(!req.query.password || req.query.password !== "lyjnbnbznb@123")
+    {
+        res.end("wrong password");
+        return;
+    }
+
+    req.session.isAdmin = "no_proto";
+    pool.getConnection(function(err,conn1){
+        conn1.query(db.queryAllResult,function(err1,result1){
+            res.render('admin',{
+                isLogin: true,
+                loginUsername: "admin",
+                records: result1
+            });
+        });
+
+    });
     return;
+});
+
+app.get('/admin/result',function(req,res){
+    if(req.session.isAdmin !== "no_proto")
+    {
+        res.redirect(302,'/');
+        return;
+    }
+    if(!req.query.id)
+    {
+        res.end();
+        return;
+    }
+
+    pool.getConnection(function(err1,conn1){
+        conn1.query(db.queryUserResultById,[req.query.id.toString()],function(err2,result1){
+            userResults=Array();
+            userAns = JSON.parse(result1[0]['ansJson']);
+
+            conn1.query(db.queryAllQuestion,function(err,result2){
+                result2.forEach(function(question){
+                    userResult = {}; 
+                    userResult.ansType = question.ansType;
+                    if(question["ansType"] === 1)
+                    {
+                        userResult["ans"]=userAns['radio_'+question.id];
+                    }
+                    else if(question["ansType"] === 2)
+                    {
+                        userResult["ans"]=userAns['checkbox_'+question.id];
+                    }
+                    else if(question["ansType"] === 3)
+                    {
+                        userResult["ans"]=userAns['textans_'+question.id];
+                    }
+                    userResult["title"] = question.title;
+                    userResult["content"] = question.content;
+                    userResult["choice"] = question.ans;
+                    userResults.push([userResult]);
+ 
+                });
+                res.render('result',{
+                    isLogin: true,
+                    loginUsername: "admin",
+                    results: userResults
+                });
+
+            });
+
+            
+        });
+    });
 });
 
 app.get('/captcha', function (req, res) {
@@ -135,7 +201,6 @@ app.post('/start', function (req,res){
 
     pool.getConnection(function(connErr,conn){
         conn.query(db.insertUserQuestionResult,[JSON.stringify(userAns),req.session.name,req.session.stuNo],function(queryErr,result1){
-            console.log(queryErr);
             return;
         });
     });
