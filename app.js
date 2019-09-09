@@ -29,7 +29,7 @@ var pool = mysql.createPool(db.mysql);
 
 // disabled for security issue: prototype pollution
 // app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({limit:'1mb', extended: true }));
+app.use(bodyParser.urlencoded({limit:'2mb', extended: true }));
 
 app.get('/', function (req, res) {
     if (req.session.baseInfoOk) {
