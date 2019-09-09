@@ -44,7 +44,7 @@
                 <br>
 
                 <label for="captcha">验证码</label>
-                <input type="text" name="captcha" id="captcha" value="">
+                <input type="text" name="captcha" id="captcha" pattern="U[0-9]{9}" value="">
                 <br>
                 <img src="/captcha" onclick={$(event.target).attr('src','/captcha?'+Math.random())}>
                 <br>
