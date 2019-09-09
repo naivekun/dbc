@@ -73,7 +73,7 @@ app.post('/', function (req, res) {
                 return;
             }
 
-            connection.query(db.insertUserBaseInfo, [req.body.name, req.body.stuNo], function (err2, result2) {
+            connection.query(db.insertUserBaseInfo, [req.body.name, req.body.stuNo,moment().format('YYYY-MM-DD HH:mm:ss'),req.connection.remoteAddress], function (err2, result2) {
                 if(!err2)
                 {
                     req.session.baseInfoOk=1;
