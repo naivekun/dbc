@@ -29,7 +29,7 @@ var pool = mysql.createPool(db.mysql);
 
 // disabled for security issue: prototype pollution
 // app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({limit:'1mb', extended: true }));
 
 app.get('/', function (req, res) {
     if (req.session.baseInfoOk) {
@@ -180,8 +180,7 @@ app.get('/start', function (req, res) {
     
     res.render('start', {
         posts: allQuestions,
-        isLogin: true,
-        loginUsername: req.session.name
+        isLogin: true,        loginUsername: req.session.name
     });
 ;
 });
