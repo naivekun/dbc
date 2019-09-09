@@ -36,7 +36,7 @@
                                 <% post.ans.split("|||").forEach(function(choice){ choiceIndex = choiceIndex + 1 %>
                                 <div class="am-radio">
                                 <label>
-                                    <input type="radio" name="radio_<%= ansIndex %>" value="<%= choiceIndex %>"><%= choice %>
+                                    <input type="radio" name="radio_<%= post.id %>" value="<%= choiceIndex %>"><%= choice %>
                                 </label>
                                 </div>
                                 <% }); %>
@@ -46,12 +46,12 @@
                                 <% post.ans.split("|||").forEach(function(choice){ choiceIndex = choiceIndex + 1 %>
                                 <div class="am-checkbox">
                                 <label>
-                                    <input type="checkbox" name="checkbox_<%= ansIndex %>[]" value="<%= choiceIndex %>"><%= choice %>
+                                    <input type="checkbox" name="checkbox_<%= post.id %>[]" value="<%= choiceIndex %>"><%= choice %>
                                 </label>
                                 </div>
                                 <% }); %>
                             <% } else if(post.ansType == "3") { %>
-                                <textarea rows="5" type="text" name="textans_<%= ansIndex %>" id="ans<%= ansIndex %>" value=""></textarea>
+                                <textarea rows="5" type="text" name="textans_<%= post.id %>" id="ans<%= ansIndex %>" value=""></textarea>
                             <% } %>
                         </div>
                     </div>
