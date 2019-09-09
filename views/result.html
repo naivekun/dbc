@@ -51,7 +51,7 @@
                                 </div>
                                 <% }); %>
                             <% } else if(result["ansType"] == 3) { %>
-                                <input type="text" name="textans_<%= ansIndex %>" id="ans<%= ansIndex %>" value="<%= result.ans %>">
+                                <textarea rows="5" type="text" name="textans_<%= ansIndex %>" id="ans<%= ansIndex %>"><%= result.ans %></textarea>
                             <% } %>
                         </div>
                     </div>
