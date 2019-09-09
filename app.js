@@ -181,7 +181,7 @@ app.get('/start', function (req, res) {
     res.render('start', {
         posts: allQuestions,
         isLogin: true,
-        loginUsername: req.body.name
+        loginUsername: req.session.name
     });
 ;
 });
