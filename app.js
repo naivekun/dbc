@@ -101,12 +101,14 @@ app.get('/admin', function (req, res) {
     req.session.isAdmin = "no_proto";
     pool.getConnection(function(err,conn1){
         conn1.query(db.queryAllResult,function(err1,result1){
+            conn1.release();
             res.render('admin',{
                 isLogin: true,
                 loginUsername: "admin",
                 records: result1
             });
         });
+        
 
     });
     return;
@@ -130,6 +132,7 @@ app.get('/admin/result',function(req,res){
             userAns = JSON.parse(result1[0]['ansJson']);
 
             conn1.query(db.queryAllQuestion,function(err,result2){
+                conn1.release();
                 result2.forEach(function(question){
                     userResult = {}; 
                     userResult.ansType = question.ansType;
@@ -161,6 +164,7 @@ app.get('/admin/result',function(req,res){
 
             
         });
+        
     });
 });
 
